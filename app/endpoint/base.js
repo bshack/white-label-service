@@ -15,23 +15,23 @@
         }
 
         get() {
-
+            return {};
         }
 
         post() {
-
+            return {};
         }
 
         delete() {
-
+            return {};
         }
 
         patch() {
-
+            return {};
         }
 
         put() {
-
+            return {};
         }
 
     };

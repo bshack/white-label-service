@@ -23,6 +23,7 @@
     "gulp-express": "^0.3.5",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
+    "helmet": "^2.1.2",
     "knex": "^0.11.10",
     "mariasql": "^0.2.6",
     "require-dir": "^0.3.0",
