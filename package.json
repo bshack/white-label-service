@@ -1,0 +1,31 @@
+{
+  "name": "white-label-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bshack/white-label-service.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bshack/white-label-service/issues"
+  },
+  "homepage": "https://github.com/bshack/white-label-service#readme",
+  "dependencies": {
+    "express": "x.x.x",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-express": "^0.3.5",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "knex": "^0.11.10",
+    "mariasql": "^0.2.6",
+    "require-dir": "^0.3.0",
+    "yargs": "^5.0.0"
+  }
+}
