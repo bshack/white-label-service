@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/bshack/white-label-service#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
     "express": "x.x.x",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
@@ -26,6 +28,7 @@
     "helmet": "^2.1.2",
     "knex": "^0.11.10",
     "mariasql": "^0.2.6",
+    "mysql": "^2.11.1",
     "require-dir": "^0.3.0",
     "yargs": "^5.0.0"
   }
