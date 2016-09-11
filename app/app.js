@@ -1,149 +1,31 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
+const http2 = require('spdy');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const compression = require('compression')
+const compression = require('compression');
+const BaseEndpoint = require('./endpoint/base');
+
+let baseEndpoint = new BaseEndpoint();
 
 app.use(bodyParser.json());
 app.use(compression());
 app.use(helmet());
 
-var knex = require('knex')({
-    client: 'mysql',
-    connection: {
-        host: '127.0.0.1',
-        user: 'root',
+app.post('/:table', baseEndpoint.post);
 
-        database: 'white-label-model'
-    }
-});
+app.get('/:table/:id', baseEndpoint.get);
 
-app.post('/user', (req, res) => {
+app.put('/:table/:id', baseEndpoint.put);
 
-    res.setHeader('Content-Type', 'application/json');
+app.patch('/:table/:id', baseEndpoint.patch);
 
-    knex('user')
-        .insert(req.body)
-        .catch(function(error) {
-            res.send(error);
-        })
-        .then((data) => {
-            res.send(data);
-        });
+app.delete('/:table/:id', baseEndpoint.delete);
 
-});
-
-app.get('/user/:id', (req, res) => {
-
-    res.setHeader('Content-Type', 'application/json');
-
-    knex
-        .select('*')
-        .from('user')
-        .where({
-            id: req.params.id
-        })
-        .catch(function(error) {
-            res.send({
-                status: false,
-                data: error
-            });
-        })
-        .then((data) => {
-            res.send({
-                status: true,
-                data: data
-            });
-        });
-
-});
-
-app.put('/user/:id', (req, res) => {
-
-    res.setHeader('Content-Type', 'application/json');
-
-    knex('user')
-        .where('id', req.params.id)
-        .update({
-            email: req.body.email
-        })
-        .catch(function(error) {
-            res.send({
-                status: false,
-                data: error
-            });
-        })
-        .then((data) => {
-            if (data === 1) {
-                res.send({
-                    status: true,
-                    data: data
-                });
-            } else {
-                res.send({
-                    status: false,
-                    data: data
-                });
-            }
-        });
-
-});
-
-app.patch('/user/:id', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    knex('user')
-        .where('id', req.params.id)
-        .update({
-            email: req.body.email
-        })
-        .catch(function(error) {
-            res.send({
-                status: false,
-                data: error
-            });
-        })
-        .then((data) => {
-            if (data === 1) {
-                res.send({
-                    status: true,
-                    data: data
-                });
-            } else {
-                res.send({
-                    status: false,
-                    data: data
-                });
-            }
-        });
-});
-
-app.delete('/user/:id', (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    knex('user')
-        .where('id', req.params.id)
-        .del()
-        .catch(function(error) {
-            res.send({
-                status: false,
-                data: error
-            });
-        })
-        .then((data) => {
-            if (data === 1) {
-                res.send({
-                    status: true,
-                    data: data
-                });
-            } else {
-                res.send({
-                    status: false,
-                    data: data
-                });
-            }
-        });
-
-});
-
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
-});
+http2
+    .createServer({
+        key: fs.readFileSync(__dirname + '/ssl/local.key', 'utf8'),
+        cert: fs.readFileSync(__dirname + '/ssl/local.crt', 'utf8')
+    }, app)
+    .listen(3000);
