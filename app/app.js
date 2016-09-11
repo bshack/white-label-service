@@ -15,7 +15,9 @@ app.use(helmet());
 
 app.post('/:table', baseEndpoint.post);
 
-app.get('/:table/:id', baseEndpoint.get);
+app.get('/:table', baseEndpoint.getMultiple);
+
+app.get('/:table/:id', baseEndpoint.getOne);
 
 app.put('/:table/:id', baseEndpoint.put);
 

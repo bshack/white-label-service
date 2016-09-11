@@ -1,4 +1,6 @@
-const knex = require('knex')({
+const knex = require('knex');
+
+global.knex = knex({
     client: 'mysql',
     connection: {
         host: '127.0.0.1',
@@ -13,8 +15,12 @@ const knex = require('knex')({
 
     const Base = class {
 
+        constructor() {
+
+        }
+
         post(req, res, next) {
-            knex(req.params.table)
+            global.knex(req.params.table)
                 .insert(req.body)
                 .catch((error) => {
                     res.status(500).json({
@@ -30,13 +36,39 @@ const knex = require('knex')({
                 });
         }
 
-        get(req, res, next) {
-            knex
+        getOne(req, res, next) {
+            global.knex
                 .select('*')
                 .from(req.params.table)
                 .where({
                     id: req.params.id
                 })
+                .catch((error) => {
+                    res.status(500).json({
+                        status: false,
+                        data: error
+                    });
+                })
+                .then((data) => {
+                    if (data.length) {
+                        res.json({
+                            status: true,
+                            data: data[0]
+                        });
+                    } else {
+                        res.status(404).json({
+                            status: false,
+                            data: data
+                        });
+                    }
+                });
+        }
+
+        getMultiple(req, res, next) {
+            global.knex
+                .select('*')
+                .from(req.params.table)
+                .where(req.query)
                 .catch((error) => {
                     res.status(500).json({
                         status: false,
@@ -59,7 +91,7 @@ const knex = require('knex')({
         }
 
         put(req, res, next) {
-            knex(req.params.table)
+            global.knex(req.params.table)
                 .where('id', req.params.id)
                 .update(req.body)
                 .catch((error) => {
@@ -84,7 +116,7 @@ const knex = require('knex')({
         }
 
         patch(req, res, next) {
-            knex(req.params.table)
+            global.knex(req.params.table)
                 .where('id', req.params.id)
                 .update(req.body)
                 .catch((error) => {
@@ -109,7 +141,7 @@ const knex = require('knex')({
         }
 
         delete(req, res, next) {
-            knex(req.params.table)
+            global.knex(req.params.table)
                 .where('id', req.params.id)
                 .del()
                 .catch((error) => {
