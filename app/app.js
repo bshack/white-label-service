@@ -5,25 +5,109 @@ const http2 = require('spdy');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
-const BaseEndpoint = require('./endpoint/base');
+const BaseEndpoint = require('./data/base');
 
 let baseEndpoint = new BaseEndpoint();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(compression());
-app.use(helmet());
 
-app.post('/:table', baseEndpoint.post);
+app.post('/:table', (req, res, next) => {
+    baseEndpoint.post(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
-app.get('/:table', baseEndpoint.getMultiple);
+app.get('/:table', (req, res, next) => {
+    baseEndpoint.getMultiple(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
-app.get('/:table/:id', baseEndpoint.getOne);
+app.get('/:table/:id', (req, res, next) => {
+    baseEndpoint.getOne(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
-app.put('/:table/:id', baseEndpoint.put);
+app.put('/:table/:id', (req, res, next) => {
+    baseEndpoint.put(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
-app.patch('/:table/:id', baseEndpoint.patch);
+app.patch('/:table/:id', (req, res, next) => {
+    baseEndpoint.patch(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
-app.delete('/:table/:id', baseEndpoint.delete);
+app.delete('/:table/:id', (req, res, next) => {
+    baseEndpoint.delete(req.params, req.query, req.body)
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
+                data: result
+            });
+        })
+        .then((result) => {
+            res.json({
+                status: true,
+                data: result
+            });
+        });
+});
 
 http2
     .createServer({

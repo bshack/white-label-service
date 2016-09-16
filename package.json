@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/bshack/white-label-service#readme",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "express": "x.x.x",
