@@ -21,107 +21,87 @@ global.knex = knex({
 
         }
 
-        post(params, query, body) {
+        post(params, body) {
             return new Promise((resolve, reject) => {
                 global.knex(params.table)
                     .insert(body)
-                    .catch((error) => {
-                        reject(error);
-                    })
-                    .then((data) => {
-                        resolve(data);
-                    });
+                    .then(resolve)
+                    .catch(reject);
             });
         }
 
-        getOne(params, query, body) {
+        getMultiple(params, query) {
             return new Promise((resolve, reject) => {
                 global.knex
-                    .select('*')
                     .from(params.table)
-                    .where({
-                        id: params.id
-                    })
-                    .catch((error) => {
-                        reject(error);
-                    })
+                    .where(query)
+                    .then(resolve)
+                    .catch(reject);
+            });
+
+        }
+
+        getOne(params) {
+            return new Promise((resolve, reject) => {
+                global.knex
+                    .from(params.table)
+                    .where('id', params.id)
                     .then((data) => {
                         if (data.length) {
                             resolve(data[0]);
                         } else {
                             reject({});
                         }
-                    });
-            });
-        }
-
-        getMultiple(params, query, body) {
-            return new Promise((resolve, reject) => {
-                global.knex
-                    .select('*')
-                    .from(params.table)
-                    .where(query)
-                    .catch((error) => {
-                        reject(error);
                     })
-                    .then((data) => {
-                        resolve(data);
-                    });
+                    .catch(reject);
             });
-
         }
 
-        put(params, query, body) {
+        put(params, body) {
             return new Promise((resolve, reject) => {
                 global.knex(params.table)
                     .where('id', params.id)
                     .update(body)
-                    .catch((error) => {
-                        reject(error);
-                    })
                     .then((data) => {
                         if (data === 1) {
                             resolve(data);
                         } else {
                             reject(data);
                         }
-                    });
+                    })
+                    .catch(reject);
             });
         }
 
-        patch(params, query, body) {
+        patch(params, body) {
             return new Promise((resolve, reject) => {
                 global.knex(params.table)
                     .where('id', params.id)
                     .update(body)
-                    .catch((error) => {
-                        reject(error);
-                    })
                     .then((data) => {
                         if (data === 1) {
                             resolve(data);
                         } else {
                             reject(data);
                         }
-                    });
+                    })
+                    .catch(reject);
             });
         }
 
-        delete(params, query, body) {
+        delete(params) {
             return new Promise((resolve, reject) => {
                 global.knex(params.table)
                     .where('id', params.id)
                     .del()
-                    .catch((error) => {
-                        reject(error);
-                    })
                     .then((data) => {
                         if (data === 1) {
                             resolve(data);
                         } else {
                             reject(data);
                         }
-                    });
+                    })
+                    .catch(reject);
             });
         }
 

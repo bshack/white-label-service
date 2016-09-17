@@ -14,96 +14,96 @@ app.use(bodyParser.json());
 app.use(compression());
 
 app.post('/:table', (req, res, next) => {
-    baseEndpoint.post(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.post(req.params, req.body)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
 });
 
 app.get('/:table', (req, res, next) => {
-    baseEndpoint.getMultiple(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.getMultiple(req.params, req.query)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
 });
 
 app.get('/:table/:id', (req, res, next) => {
-    baseEndpoint.getOne(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.getOne(req.params)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
 });
 
 app.put('/:table/:id', (req, res, next) => {
-    baseEndpoint.put(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.put(req.params, req.body)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
 });
 
 app.patch('/:table/:id', (req, res, next) => {
-    baseEndpoint.patch(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.patch(req.params, req.body)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
 });
 
 app.delete('/:table/:id', (req, res, next) => {
-    baseEndpoint.delete(req.params, req.query, req.body)
-        .catch((result) => {
-            res.status(500).json({
-                status: false,
-                data: result
-            });
-        })
+    baseEndpoint.delete(req.params)
         .then((result) => {
             res.json({
                 status: true,
+                data: result
+            });
+        })
+        .catch((result) => {
+            res.status(500).json({
+                status: false,
                 data: result
             });
         });
