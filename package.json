@@ -18,6 +18,7 @@
   "homepage": "https://github.com/bshack/white-label-service#readme",
   "dependencies": {
     "bluebird": "^3.4.6",
+    "bcrypt": "x.x.x",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "connect-memcached": "^0.2.0",
